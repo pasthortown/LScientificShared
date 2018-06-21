@@ -1,0 +1,123 @@
+<input type="file" class="form-control" style="visibility: hidden; height: 0px" #fileInput name="files[]" (change)="LeerArchivo($event)" accept=".tex">
+<div class="col-12">
+    <div class="row">
+        <div class="col-6">
+            <div class="col-md-12 text-left">
+               <h4 style="margin-top:0px"><strong>LaTEX</strong></h4>
+            </div>
+            <div class="card col-12">
+                <div class="input-group mb-2 mt-2">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text" id="btnGroupAddon">Título</div>
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="tituloDocumento" placeholder="Documento Sin Título">
+                </div>
+                <div class="btn-toolbar mb-2" role="toolbar">
+                    <div class="btn-group mr-2" role="group">
+                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                            <span class="fa fa-edit"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary">
+                            <span class="fa fa-folder-open-o"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="DescargarArchivoTEX()">
+                            <span class="fa fa-download"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="subirArchivo()">
+                            <span class="fa fa-upload"></span>
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-secondary" (click)="DescargarArchivoTEX()">
+                            <span class="fa fa-share-alt"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="Compilar()">
+                            <span class="fa fa-cogs"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="btn-toolbar mb-2" role="toolbar">
+                    <div class="btn-group mr-2" role="group">
+                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                            <span class="fa fa-gbp"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                            <span class="fa fa-calculator"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                            <span class="fa fa-area-chart"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                            <span class="fa fa-language"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                            <span class="fa fa-table"></span>
+                        </button>
+                    </div>
+                    <div class="btn-group mr-2" role="group">
+                        <button type="button" class="btn btn-secondary" (click)="DescargarArchivoTEX()">
+                            <span class="fa fa-copy"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="Compilar()">
+                            <span class="fa fa-cut"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="Compilar()">
+                            <span class="fa fa-paste"></span>
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-secondary" (click)="DescargarArchivoTEX()">
+                            <span class="fa fa-bold"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="Compilar()">
+                            <span class="fa fa-italic"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="Compilar()">
+                            <span class="fa fa-underline"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ace-editor class="col-12" [durationBeforeCallback]="100" [autoUpdateContent]="true" style="min-height: 500px; width:100%; overflow: auto;" [options]="options" [(text)]="latexcode" [mode]="'latex'"></ace-editor>
+        </div>
+        <div class="col-6">
+            <div class="col-md-12 text-left">
+               <h4 style="margin-top:0px"><strong>Resultado</strong></h4>
+            </div>
+            <div class="card col-12">
+                <div class="btn-toolbar mb-2 mt-2 justify-content-between" role="toolbar">
+                    <div class="btn-group mr-2" role="group">
+                        <button type="button" class="btn btn-secondary" (click)="cambiarPagina(1)">
+                            <span class="fa fa-fast-backward"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="cambiarPagina(pagina-1)">
+                            <span class="fa fa-backward"></span>
+                        </button>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                        <div class="input-group-text" id="btnGroupAddon">Página</div>
+                        </div>
+                        <input type="number" [(ngModel)]="pagina" class="form-control" placeholder="Número">
+                    </div>
+                    <div class="btn-group mr-2" role="group">
+                        <button type="button" class="btn btn-secondary" (click)="cambiarPagina(pagina+1)">
+                            <span class="fa fa-forward"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="cambiarPagina(999999999)">
+                            <span class="fa fa-fast-forward"></span>
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-secondary" (click)="DescargarArchivo()">
+                            <span class="fa fa-save"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" style="background: white; border: 1px #D3D3D3 solid; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+                <pdf-viewer [src]="pdfSrc" [show-all]="false" [(page)]="pagina" [render-text]="true" [original-size]="false" style="display: block;"></pdf-viewer>
+            </div>
+        </div>
+    </div>
+  </div>
