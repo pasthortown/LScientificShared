@@ -1,0 +1,20 @@
+.main-container {
+  -ms-overflow-x: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: absolute;
+  top: 75px;
+  left: 0px;
+  right: 0px;
+  bottom: 40px;
+}
+
+.footer-container {
+  position: absolute;
+  height: 40px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  text-align: center;
+  line-height: 40px;
+}
