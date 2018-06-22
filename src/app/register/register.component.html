@@ -1,0 +1,40 @@
+<div class="login-page">
+  <div class="container-fluid" style="margin-top:20px;">
+    <div class="form-group row">
+      <div class="col-xs-1 col-sm-1 col-md-3 col-lg-3"></div>
+      <div class="form-group text-center col-xs-11 col-sm-11 col-md-6 col-lg-6 pretty-form">
+        <div class="form-group">
+          <img src="assets/images/logo.png" class="img-responsive col-5"/>
+        </div>
+        <div class="form-group">
+          <div class="form-content">
+            <div class="form-group row">
+              <input type="text" class="form-control input-underline input-lg" [(ngModel)]="usuario.identificacion" id="identificacion" name="identificacion" placeholder="Identificación">
+            </div>
+            <div class="form-group row">
+              <input type="text" class="form-control input-underline input-lg" [(ngModel)]="usuario.nombres" id="nombres" name="nombres" placeholder="Nombres">
+            </div>
+            <div class="form-group row">
+              <input type="text" class="form-control input-underline input-lg" [(ngModel)]="usuario.apellidos" id="apellidos" name="apellidos" placeholder="Apellidos">
+            </div>
+            <div class="form-group row">
+              <input type="text" class="form-control input-underline input-lg" [(ngModel)]="usuario.telefono1" id="telefono1" name="telefono1" placeholder="Teléfono">
+            </div>
+            <div class="form-group row">
+              <input type="email" class="form-control input-underline input-lg" [(ngModel)]="usuario.email" id="email" name="email" placeholder="Correo Electrónico">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary mr-1" (click)="crearCuenta()">
+            Crear Cuenta
+          </button>
+          <button type="submit" class="btn btn-danger ml-1" routerLink="/login" routerLinkActive="active">
+            Cancelar
+          </button>
+        </div>
+      </div>
+      <div class="col-xs-1 col-sm-1 col-md-3 col-lg-3"></div>
+    </div>
+  </div>
+</div>
