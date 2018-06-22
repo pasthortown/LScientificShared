@@ -23,9 +23,6 @@ export class RegisterComponent implements OnInit {
   crearCuenta() {
     this.http.post(this.webServiceURL + 'cuentas/crear_cuenta', JSON.stringify(this.usuario))
     .subscribe(r1 => {
-      if ( JSON.stringify(r1.json()) === 'false') {
-        return;
-      }
       this.router.navigate(['/login']);
     }, error => {
 

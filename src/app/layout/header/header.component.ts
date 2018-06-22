@@ -1,3 +1,4 @@
+import { Usuario } from './../../entidades/CRUD/Usuario';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,7 +12,8 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.username = 'Luis Alfonso Salazar Vaca';
+    const usuario = JSON.parse(sessionStorage.getItem('usuario')) as Usuario;
+    this.username = usuario.nombres + ' ' + usuario.apellidos;
   }
 
 }
