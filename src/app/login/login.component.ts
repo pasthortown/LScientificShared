@@ -13,11 +13,14 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   email: string;
   clave: string;
+  datosConfirmados: Boolean;
+
   webServiceURL = environment.apiUrl;
 
   constructor(private http: Http, public router: Router) { }
 
   ngOnInit() {
+    this.datosConfirmados = true;
   }
 
   ingresar() {
@@ -26,10 +29,12 @@ export class LoginComponent implements OnInit {
     .subscribe(r1 => {
       if ( !r1.json() ) {
         sessionStorage.clear();
+        this.datosConfirmados = false;
         return;
       }
       sessionStorage.setItem('usuario', JSON.stringify(r1.json()[0]));
       this.router.navigate(['/main']);
+      this.datosConfirmados = true;
     }, error => {
 
     });
@@ -42,7 +47,6 @@ export class LoginComponent implements OnInit {
       if ( JSON.stringify(r1.json()) === '[0]') {
         return;
       }
-      console.log(r1);
     }, error => {
 
     });

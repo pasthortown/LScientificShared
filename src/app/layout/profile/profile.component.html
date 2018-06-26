@@ -11,7 +11,7 @@
           <label class="col-form-label">Identificación</label>
       </div>
       <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
-          <input type="text" class="form-control" id="identificacion" placeholder="Identificación" readonly>
+          <input type="text" class="form-control" id="identificacion" [(ngModel)]="usuario.identificacion" placeholder="Identificación">
       </div>
       <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
   </div>
@@ -21,7 +21,7 @@
           <label class="col-form-label">Nombres</label>
       </div>
       <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
-          <input type="text" class="form-control" id="nombres" placeholder="Nombres">
+          <input type="text" class="form-control" id="nombres" [(ngModel)]="usuario.nombres" placeholder="Nombres">
       </div>
       <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
   </div>
@@ -31,49 +31,27 @@
           <label class="col-form-label">Apellidos</label>
       </div>
       <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
-          <input type="text" class="form-control" id="apellidos" placeholder="Apellidos">
+          <input type="text" class="form-control" id="apellidos" [(ngModel)]="usuario.apellidos" placeholder="Apellidos">
       </div>
       <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
   </div>
   <div class="form-group row">
       <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
       <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3" >
-          <label class="col-form-label">Género</label>
+          <label class="col-form-label">Teléfono</label>
       </div>
       <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
-          <select class="form-control" id="idGenero" name="idGenero">
-              <option value="" selected>Seleccione...</option>
-          </select>
+          <input type="text" class="form-control" id="telefono" [(ngModel)]="usuario.telefono1" placeholder="Teléfono">
       </div>
       <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
   </div>
   <div class="form-group row">
       <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
       <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3" >
-          <label class="col-form-label">Dirección</label>
+          <label class="col-form-label">Título</label>
       </div>
       <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
-          <input type="text" class="form-control" id="direccion" placeholder="Dirección">
-      </div>
-      <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
-  </div>
-  <div class="form-group row">
-      <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
-      <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3" >
-          <label class="col-form-label">Teléfono Principal</label>
-      </div>
-      <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
-          <input type="text" class="form-control" id="telefonoPrincipal" placeholder="Teléfono Principal">
-      </div>
-      <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
-  </div>
-  <div class="form-group row">
-      <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
-      <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3" >
-          <label class="col-form-label">Teléfono Secundario</label>
-      </div>
-      <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
-          <input type="text" class="form-control" id="telefonoSecundario" placeholder="Teléfono Secundario">
+          <input type="text" class="form-control" id="titulo" [(ngModel)]="usuario.titulo" placeholder="Título">
       </div>
       <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
   </div>
@@ -83,9 +61,44 @@
           <label class="col-form-label">Correo Electrónico</label>
       </div>
       <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
-          <input type="email" class="form-control" id="correoElectronico" placeholder="Correo Electrónico">
+          <input type="text" class="form-control" id="correoElectronico" [(ngModel)]="usuario.email" placeholder="Correo Electrónico">
       </div>
       <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
+  </div>
+  <div class="form-group row">
+      <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
+      <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3" >
+          <label class="col-form-label">Institución</label>
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
+          <input type="text" class="form-control" id="institucion" [(ngModel)]="usuario.institucion" placeholder="Institución">
+      </div>
+      <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
+  </div>
+  <div class="form-group row">
+      <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
+      <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3" >
+          <label class="col-form-label">Departamento</label>
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
+          <input type="email" class="form-control" id="departamento" [(ngModel)]="usuario.departamento" placeholder="Departamento">
+      </div>
+      <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
+  </div>
+  <div class="form-group row">
+    <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
+    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3" >
+        <label class="col-form-label">Fotografía</label>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
+        <input type="file" class="form-control" id="foto" placeholder="Fotografía" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
+  </div>
+  <div class="form-group row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" >
+          <img src="{{srcFoto}}" class="rounded-circle" width="150px" (click)="fileInput.click()">
+      </div>
   </div>
   <div class="form-group row">
       <div class="col-12 text-center">
@@ -99,7 +112,7 @@
           <label class="col-form-label">Nueva Clave</label>
       </div>
       <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
-          <input type="password" class="form-control" id="claveNueva" placeholder="Nueva Clave">
+          <input type="password" class="form-control" id="claveNueva" (keyup)="validarClaveEvent()" placeholder="Nueva Clave" [(ngModel)]="claveNueva">
       </div>
       <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
   </div>
@@ -109,13 +122,13 @@
           <label class="col-form-label">Confirmar Nueva Clave</label>
       </div>
       <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
-          <input type="password" class="form-control" id="confirmClaveNueva" placeholder="Confirmar Nueva Clave">
+          <input type="password" class="form-control" id="confirmClaveNueva" (keyup)="validarClaveEvent()" placeholder="Confirmar Nueva Clave" [(ngModel)]="confirmarNuevaClave">
       </div>
       <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2" ></div>
   </div>
-  <div class="form-group row">
+  <div *ngIf="cambiandoClave" class="form-group row">
       <div class="col-12 text-center">
-          <div class="col-12 alert alert-success" role="alert">
+          <div *ngIf="validarClave" class="col-12 alert alert-success" role="alert">
               Las contraseñas coinciden.
           </div>
           <div *ngIf="!validarClave" class="col-12 alert alert-danger" role="alert">
@@ -125,7 +138,7 @@
   </div>
   <div class="form-group row">
       <div class="col-12 text-center">
-          <button type="button" class="btn btn-success">
+          <button type="button" class="btn btn-success" (click)="updateClave()">
               <span class="fa fa-check"></span>&nbsp;Cambiar Clave
           </button>
       </div>
@@ -134,10 +147,10 @@
   <div class="form-group row">
       <div style="width: 100%; text-align:center;">
           <div>
-              <button type="button" class="btn btn-primary">
+              <button type="button" class="btn btn-primary mr-1" (click)="actualizarCuenta()">
                   <span class="fa fa-refresh"></span>&nbsp;Actualizar
               </button>
-              <button type="button" class="btn btn-danger">
+              <button type="button" class="btn btn-danger ml-1" routerLink="/main" routerLinkActive="active">
                   <span class="fa fa-remove"></span>&nbsp;Cancelar
               </button>
           </div>

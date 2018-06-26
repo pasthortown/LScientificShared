@@ -31,7 +31,16 @@ CREATE TABLE UsuarioDocumento (
 CREATE TABLE Documento (
     id INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(500) NULL,
-	fecha DATETIME NULL,
+  	fecha DATETIME NULL,
     contenido LONGTEXT NULL,
-	PRIMARY KEY (id)
+	  PRIMARY KEY (id)
+) ENGINE myISAM;
+
+CREATE TABLE FotoPerfil (
+    id INT NOT NULL AUTO_INCREMENT,
+    idUsuario INT NOT NULL,
+    tipoArchivo VARCHAR(255) NULL,
+    nombreArchivo VARCHAR(255) NULL,
+    adjunto LONGBLOB NULL,
+    PRIMARY KEY (id)
 ) ENGINE myISAM;

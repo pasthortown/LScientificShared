@@ -4,13 +4,13 @@
       <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown" ngbDropdown>
               <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
-                  <i><img src="assets/images/luis.jpg" class="rounded-circle" style="width: 40px; height: 40px;"></i>&nbsp; {{username}} <b class="caret"></b>
+                  <i><img src="{{fotoPerfil}}" class="rounded-circle" style="width: 40px; height: 40px;"></i>&nbsp; {{username}} <b class="caret"></b>
               </a>
               <div class="dropdown-menu-right" ngbDropdownMenu>
                   <a routerLink="/profile" class="dropdown-item">
                       <i class="fa fa-fw fa-user"></i>&nbsp;Perfil
                   </a>
-                  <a routerLink="/login" routerLinkActive="active" class="dropdown-item">
+                  <a class="dropdown-item" (click)="cerrarSesion()">
                       <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
                   </a>
               </div>

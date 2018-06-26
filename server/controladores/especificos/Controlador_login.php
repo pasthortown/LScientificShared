@@ -8,7 +8,7 @@ class Controlador_login extends Controlador_Base
    { 
        $email = $args["email"];
        $clave = $args["clave"];
-       $sql = "SELECT Usuario.* FROM Persona INNER JOIN Cuenta ON Cuenta.idUsuario = Usuario.id WHERE Usuario.email = ? AND Cuenta.clave = aes_encrypt(?,'".CIFRADO."');";
+       $sql = "SELECT Usuario.* FROM Usuario INNER JOIN Cuenta ON Cuenta.idUsuario = Usuario.id WHERE Usuario.email = ? AND Cuenta.clave = aes_encrypt(?,'".CIFRADO."');";
        $parametros = array($email, $clave);
        $respuesta = $this->conexion->ejecutarConsulta($sql,$parametros);
        if(is_null($respuesta[0])||$respuesta[0]==0){
@@ -23,7 +23,7 @@ class Controlador_login extends Controlador_Base
    {
         $email = $args["email"];
         $accion = $args["accion"];
-        $sql = "SELECT Cuenta.id, CONCAT(Persona.nombres,' ',Persona.apellidos) as 'usuario' FROM Usuario INNER JOIN Cuenta ON Usuario.id = Cuenta.idUsuario WHERE Usuario.email = ?;";
+        $sql = "SELECT Cuenta.id, CONCAT(Usuario.nombres,' ',Usuario.apellidos) as 'usuario' FROM Usuario INNER JOIN Cuenta ON Usuario.id = Cuenta.idUsuario WHERE Usuario.email = ?;";
         $parametros = array($email);
         $respuesta = $this->conexion->ejecutarConsulta($sql,$parametros);
         $usuario = $respuesta[0]["usuario"];

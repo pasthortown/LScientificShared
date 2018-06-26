@@ -16,7 +16,6 @@ class Controlador_cuentas extends Controlador_Base
       $institucion = $args["institucion"];
       $departamento = $args["departamento"];
       $parametros = array($identificacion,$nombres,$apellidos,$telefono1,$titulo,$email,$institucion,$departamento);
-      return json_encode($parametros);
       $sql = "INSERT INTO Usuario (identificacion, nombres, apellidos, telefono1, titulo, email, institucion, departamento) VALUES (?,?,?,?,?,?,?,?);";
       $insert = $this->conexion->ejecutarConsulta($sql,$parametros);
       $sql = "SELECT * FROM Usuario WHERE identificacion = ?;";
@@ -26,8 +25,8 @@ class Controlador_cuentas extends Controlador_Base
       $parametros = array($idUsuario);
       $sql = "INSERT INTO Cuenta (idUsuario) VALUES (?);";
       $cuenta = $this->conexion->ejecutarConsulta($sql,$parametros);
-      $mailSender = new Controlador_login();
-      $args = array("email"=>$correoElectronico, "accion"=>"Tu cuenta en LSystems-Scientific-Shared");
-      return $mailSender->passwordChange($args);
+      $controladorLogin = new Controlador_login();
+      $args = array("email"=>$email, "accion"=>"Tu cuenta en LSystems-Scientific-Shared");
+      return $controladorLogin->passwordChange($args);
    }
 }
