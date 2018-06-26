@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { saveAs } from "file-saver/FileSaver";
 import { UsuarioDocumento } from '../../entidades/CRUD/UsuarioDocumento';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-main',
@@ -12,19 +13,24 @@ import { UsuarioDocumento } from '../../entidades/CRUD/UsuarioDocumento';
 })
 export class MainComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
+  @ViewChild('editor') editor;
   webServiceURL: string;
   pdfSrc: string;
   pdfBytes: string;
   pagina: number;
   documento: Documento;
   usuario: Usuario;
+  proyectos: Documento[];
+  autores: Usuario[];
+
   options: any = {printMargin: true, enableBasicAutocompletion: false, autoScrollEditorIntoView: true};
 
-  constructor(public http: Http) { }
+  constructor(public http: Http, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.usuario = JSON.parse(sessionStorage.getItem('usuario')) as Usuario;
     this.documento = new Documento();
+    this.documento.nombre = '';
     this.documento.fecha = new Date();
     this.pagina = 1;
     this.pdfSrc = './../../../assets/pdfs/prueba.pdf';
@@ -126,7 +132,44 @@ export class MainComponent implements OnInit {
     });
   }
 
-  compartirDocumento() {
+  compartirDocumento(content) {
+    this.http.get(this.webServiceURL + 'usuario/leer')
+    .subscribe(r => {
+      if ( r.json()[0] === 0 ) {
+        return;
+      }
+      this.autores = r.json() as Usuario[];
+    }, error => {
+    });
+    this.mostrarInfo(content);
+  }
 
+  abrirDocumento(content) {
+    this.http.get(this.webServiceURL + 'documento/leer_filtrado?columna=1&tipo_filtro=coincide&filtro=1&idUsuario=' + this.usuario.id)
+    .subscribe(r => {
+      if ( r.json()[0] === 0 ) {
+        return;
+      }
+      this.proyectos = r.json() as Documento[];
+    }, error => {
+    });
+    this.mostrarInfo(content);
+  }
+
+  mostrarInfo(content) {
+    const options: NgbModalOptions = {
+      size: 'lg'
+    };
+    this.modalService.open(content, options)
+    .result
+    .then((result => {
+
+    }), (result => {
+
+    }));
+  }
+
+  alertarPosicion() {
+    console.log({fila: this.editor.getEditor().getSelection().lead.row, columna: this.editor.getEditor().getSelection().lead.column});
   }
 }
