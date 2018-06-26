@@ -10,16 +10,24 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text" id="btnGroupAddon">Título</div>
                     </div>
-                    <input type="text" class="form-control" [(ngModel)]="tituloDocumento" placeholder="Documento Sin Título">
+                    <input type="text" class="form-control" [(ngModel)]="documento.nombre" placeholder="Documento Sin Título">
                 </div>
                 <div class="btn-toolbar mb-2" role="toolbar">
                     <div class="btn-group mr-2" role="group">
-                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                        <button type="button" class="btn btn-secondary" (click)="documento.contenido=''">
                             <span class="fa fa-edit"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="guardarDocumentoBDD()">
+                            <span class="fa fa-save"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="sincronizarDocumentoBDD()">
+                            <span class="fa fa-refresh"></span>
                         </button>
                         <button type="button" class="btn btn-secondary">
                             <span class="fa fa-folder-open-o"></span>
                         </button>
+                    </div>
+                    <div class="btn-group mr-2" role="group">
                         <button type="button" class="btn btn-secondary" (click)="DescargarArchivoTEX()">
                             <span class="fa fa-download"></span>
                         </button>
@@ -28,7 +36,7 @@
                         </button>
                     </div>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary" (click)="DescargarArchivoTEX()">
+                        <button type="button" class="btn btn-secondary" (click)="compartirDocumento()">
                             <span class="fa fa-share-alt"></span>
                         </button>
                         <button type="button" class="btn btn-secondary" (click)="Compilar()">
@@ -38,31 +46,31 @@
                 </div>
                 <div class="btn-toolbar mb-2" role="toolbar">
                     <div class="btn-group mr-2" role="group">
-                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                        <button type="button" class="btn btn-secondary">
                             <span class="fa fa-gbp"></span>
                         </button>
-                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                        <button type="button" class="btn btn-secondary">
                             <span class="fa fa-calculator"></span>
                         </button>
-                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                        <button type="button" class="btn btn-secondary">
                             <span class="fa fa-area-chart"></span>
                         </button>
-                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                        <button type="button" class="btn btn-secondary">
                             <span class="fa fa-language"></span>
                         </button>
-                        <button type="button" class="btn btn-secondary" (click)="latexcode=''">
+                        <button type="button" class="btn btn-secondary">
                             <span class="fa fa-table"></span>
                         </button>
                     </div>
                     <div class="btn-group mr-2" role="group">
+                        <button type="button" class="btn btn-secondary" (click)="Compilar()">
+                            <span class="fa fa-paste"></span>
+                        </button>
                         <button type="button" class="btn btn-secondary" (click)="DescargarArchivoTEX()">
                             <span class="fa fa-copy"></span>
                         </button>
                         <button type="button" class="btn btn-secondary" (click)="Compilar()">
                             <span class="fa fa-cut"></span>
-                        </button>
-                        <button type="button" class="btn btn-secondary" (click)="Compilar()">
-                            <span class="fa fa-paste"></span>
                         </button>
                     </div>
                     <div class="btn-group" role="group">
@@ -78,7 +86,7 @@
                     </div>
                 </div>
             </div>
-            <ace-editor class="col-12" [durationBeforeCallback]="100" [autoUpdateContent]="true" style="min-height: 500px; width:100%; overflow: auto;" [options]="options" [(text)]="latexcode" [mode]="'latex'"></ace-editor>
+            <ace-editor class="col-12" [durationBeforeCallback]="100" [autoUpdateContent]="true" style="min-height: 500px; width:100%; overflow: auto;" [options]="options" [(text)]="documento.contenido" [mode]="'latex'"></ace-editor>
         </div>
         <div class="col-6">
             <div class="col-md-12 text-left">
