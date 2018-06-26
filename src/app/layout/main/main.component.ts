@@ -22,7 +22,7 @@ export class MainComponent implements OnInit {
   usuario: Usuario;
   proyectos: Documento[];
   autores: Usuario[];
-
+  cursorPosition = {fila: 0, columna: 0};
   options: any = {printMargin: true, enableBasicAutocompletion: false, autoScrollEditorIntoView: true};
 
   constructor(public http: Http, private modalService: NgbModal) { }
@@ -169,7 +169,12 @@ export class MainComponent implements OnInit {
     }));
   }
 
-  alertarPosicion() {
-    console.log({fila: this.editor.getEditor().getSelection().lead.row, columna: this.editor.getEditor().getSelection().lead.column});
+  getCursorPosition() {
+    this.cursorPosition.fila = this.editor.getEditor().getSelection().lead.row;
+    this.cursorPosition.columna = this.editor.getEditor().getSelection().lead.column;
+  }
+
+  insertBold() {
+    this.getCursorPosition();
   }
 }
