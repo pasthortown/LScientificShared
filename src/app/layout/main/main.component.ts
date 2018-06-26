@@ -165,7 +165,7 @@ export class MainComponent implements OnInit {
     .then((result => {
 
     }), (result => {
-asdasdsa
+
     }));
   }
 
