@@ -22,7 +22,9 @@ export class MainComponent implements OnInit {
   usuario: Usuario;
   proyectos: Documento[];
   autores: Usuario[];
-  cursorPosition = {fila: 0, columna: 0};
+  abstract: string;
+  cursorPositionDesde = {fila: 0, columna: 0};
+  cursorPositionHasta = {fila: 0, columna: 0};
   options: any = {printMargin: true, enableBasicAutocompletion: false, autoScrollEditorIntoView: true};
 
   constructor(public http: Http, private modalService: NgbModal) { }
@@ -31,8 +33,10 @@ export class MainComponent implements OnInit {
     this.usuario = JSON.parse(sessionStorage.getItem('usuario')) as Usuario;
     this.documento = new Documento();
     this.documento.nombre = '';
+    this.documento.contenido = '';
     this.documento.fecha = new Date();
     this.pagina = 1;
+    this.plantilla('article');
     this.pdfSrc = './../../../assets/pdfs/prueba.pdf';
     this.webServiceURL = 'http://192.168.20.10/LScientificShared/server/pdfbuilder/';
   }
@@ -170,11 +174,106 @@ export class MainComponent implements OnInit {
   }
 
   getCursorPosition() {
-    this.cursorPosition.fila = this.editor.getEditor().getSelection().lead.row;
-    this.cursorPosition.columna = this.editor.getEditor().getSelection().lead.column;
+    if ( this.editor.getEditor().getSelection().anchor.row < this.editor.getEditor().getSelection().lead.row ) {
+      this.cursorPositionDesde.fila = this.editor.getEditor().getSelection().anchor.row;
+      this.cursorPositionDesde.columna = this.editor.getEditor().getSelection().anchor.column;
+      this.cursorPositionHasta.fila = this.editor.getEditor().getSelection().lead.row;
+      this.cursorPositionHasta.columna = this.editor.getEditor().getSelection().lead.column;
+    }
+    if ( this.editor.getEditor().getSelection().anchor.row === this.editor.getEditor().getSelection().lead.row ) {
+      if ( this.editor.getEditor().getSelection().anchor.column < this.editor.getEditor().getSelection().lead.column ) {
+        this.cursorPositionDesde.fila = this.editor.getEditor().getSelection().anchor.row;
+        this.cursorPositionDesde.columna = this.editor.getEditor().getSelection().anchor.column;
+        this.cursorPositionHasta.fila = this.editor.getEditor().getSelection().lead.row;
+        this.cursorPositionHasta.columna = this.editor.getEditor().getSelection().lead.column;
+      } else {
+        this.cursorPositionDesde.fila = this.editor.getEditor().getSelection().lead.row;
+        this.cursorPositionDesde.columna = this.editor.getEditor().getSelection().lead.column;
+        this.cursorPositionHasta.fila = this.editor.getEditor().getSelection().anchor.row;
+        this.cursorPositionHasta.columna = this.editor.getEditor().getSelection().anchor.column;
+      }
+    }
+    if ( this.editor.getEditor().getSelection().anchor.row > this.editor.getEditor().getSelection().lead.row ) {
+      this.cursorPositionDesde.fila = this.editor.getEditor().getSelection().lead.row;
+      this.cursorPositionDesde.columna = this.editor.getEditor().getSelection().lead.column;
+      this.cursorPositionHasta.fila = this.editor.getEditor().getSelection().anchor.row;
+      this.cursorPositionHasta.columna = this.editor.getEditor().getSelection().anchor.column;
+    }
   }
 
-  insertBold() {
+  insertInLatex(toInsertBefore: string, toInsertAfter: string) {
+    if ( this.documento.contenido === '') {
+      return toInsertBefore + toInsertAfter;
+    }
     this.getCursorPosition();
+    const latex = this.documento.contenido.split('\n');
+    let parteInicial = '';
+    for ( let i = 0; i < this.cursorPositionDesde.fila; i++ ) {
+      parteInicial += latex[i] + '\n';
+    }
+    parteInicial += latex[this.cursorPositionDesde.fila].substring(0, this.cursorPositionDesde.columna);
+    let parteSeleccionada = '';
+    if ( this.cursorPositionHasta.fila === this.cursorPositionDesde.fila ) {
+      parteSeleccionada += latex[this.cursorPositionDesde.fila].substring(this.cursorPositionDesde.columna, this.cursorPositionHasta.columna);
+    } else {
+      parteSeleccionada += latex[this.cursorPositionDesde.fila].substring(this.cursorPositionDesde.columna) + '\n';
+      for ( let i = this.cursorPositionDesde.fila + 1; i < this.cursorPositionHasta.fila; i++ ) {
+        parteSeleccionada += latex[i] + '\n';
+      }
+      parteSeleccionada += latex[this.cursorPositionHasta.fila].substring(0, this.cursorPositionHasta.columna);
+    }
+    let parteFinal = '';
+    parteFinal += latex[this.cursorPositionHasta.fila].substring(this.cursorPositionHasta.columna);
+    if ( this.cursorPositionHasta.fila !== latex.length - 1) {
+      parteFinal += '\n';
+      for ( let i = this.cursorPositionHasta.fila + 1; i < latex.length - 1; i++ ) {
+        parteFinal += latex[i] + '\n';
+      }
+      parteFinal += latex[latex.length - 1];
+    }
+    return parteInicial + toInsertBefore + parteSeleccionada + toInsertAfter + parteFinal;
+  }
+
+  insert(toInsertBefore: string, toInsertAfter: string) {
+    this.documento.contenido = this.insertInLatex(toInsertBefore, toInsertAfter);
+  }
+
+  plantilla(tipo: string) {
+    switch ( tipo ) {
+      case 'apa':
+        this.documento.contenido = '\\documentclass[12pts]{apa6}\n';
+        this.documento.contenido += '\\usepackage[utf8]{inputenc}\n';
+        this.documento.contenido += '\\title{' + this.documento.nombre + '}\n';
+        this.documento.contenido += '\\shorttitle{}\n';
+        this.documento.contenido += '\\threeauthors{}{}{}\n';
+        this.documento.contenido += '\\threeaffiliations{}{}{}\n';
+        this.documento.contenido += '\\abstract{}\n';
+        this.documento.contenido += '\\begin{document}\n';
+        this.documento.contenido += '\\maketitle\n';
+        this.documento.contenido += '\\end{document}\n';
+      break;
+      case 'ieee':
+        this.documento.contenido = '\\documentclass[conference]{IEEEtran}\n';
+        this.documento.contenido += '\\usepackage[utf8]{inputenc}\n';
+        this.documento.contenido += '\\usepackage{cite}\n';
+        this.documento.contenido += '\\usepackage{authblk}\n';
+        this.documento.contenido += '\\author[1]{Primer Autor}\\author[2]{Segundo Autor}\n';
+        this.documento.contenido += '\\affil[1]{Universidad\\authorcr Email: {\\tt correo.electronico@dominio.edu.ec}\\vspace{1.5ex}}\n';
+        this.documento.contenido += '\\affil[2]{Universidad\\authorcr Email: {\\tt correo.electronico@dominio.edu.ec}\\vspace{-2ex}}\n';
+        this.documento.contenido += '\\title{' + this.documento.nombre + '}\n';
+        this.documento.contenido += '\\begin{document}\n';
+        this.documento.contenido += '\\maketitle\n';
+        this.documento.contenido += '\\begin{abstract}\n\\end{abstract}\n';
+        this.documento.contenido += '\\begin{IEEEkeywords}\n\\end{IEEEkeywords}}\n';
+        this.documento.contenido += '\\end{document}\n';
+      break;
+      case 'article':
+        this.documento.contenido = '\\documentclass[12pts]{article}\n';
+        this.documento.contenido += '\\title{' + this.documento.nombre + '}\n';
+        this.documento.contenido += '\\begin{document}\n';
+        this.documento.contenido += '\\maketitle\n';
+        this.documento.contenido += '\\end{document}\n';
+      break;
+    }
   }
 }

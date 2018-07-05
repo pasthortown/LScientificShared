@@ -20,6 +20,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.usuario = JSON.parse(sessionStorage.getItem('usuario')) as Usuario;
+    if ( this.usuario == null ) {
+      return;
+    }
     this.username = this.usuario.nombres + ' ' + this.usuario.apellidos;
     this.getFotoPerfil();
   }
